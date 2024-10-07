@@ -1,6 +1,8 @@
 pipeline {
     agent any
 
+
+
     parameters {
         string(name: 'aws_region', defaultValue: 'us-east-1', description: 'AWS Region to deploy')
         string(name: 'ami', defaultValue: 'ami-005fc0f236362e99f', description: 'AMI ID to use for the instance')
