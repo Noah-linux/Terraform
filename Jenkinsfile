@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         string(name: 'aws_region', defaultValue: 'us-east-1', description: 'AWS Region to deploy')
-        string(name: 'Ami', defaultValue: 'ami-005fc0f236362e99f', description: 'AMI ID to use for the instance')
+        string(name: 'ami', defaultValue: 'ami-005fc0f236362e99f', description: 'AMI ID to use for the instance')
         string(name: 'instance_type', defaultValue: 't2.micro', description: 'Type of the instance')
         string(name: 'key_name', defaultValue: 'workstation-key', description: 'Key pair name for SSH access')
     }
@@ -64,7 +64,7 @@ pipeline {
             steps {
                 script {
                     // Run Terraform plan with parameters
-                    sh "terraform plan -var='aws_region=${params.aws_region}' -var='Ami=${params.Ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
+                    sh "terraform plan -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
                 }
             }
         }
@@ -73,7 +73,7 @@ pipeline {
             steps {
                 script {
                     // Apply the Terraform changes
-                    sh "terraform apply -auto-approve -var='aws_region=${params.aws_region}' -var='Ami=${params.Ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
+                    sh "terraform apply -auto-approve -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
                 }
             }
         }
