@@ -46,7 +46,7 @@ pipeline {
                             rm -rf terraform-demo
                         fi
                         echo "Cloning the repository..."
-                        git clone https://github.com/Noah-linux/terraform-demo.git
+                        git clone https://github.com/Noah-linux/Terraform.git
                     '''
                 }
             }
