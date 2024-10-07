@@ -36,21 +36,20 @@ pipeline {
 }
 
 
-        stage('Checkout Code') {
-            steps {
-                script {
-                    // Check if the directory exists, remove it if it does, and then clone the repository
-                    sh '''
-                        if [ -d "Terraform.git" ]; then
-                            echo "Removing existing terraform-demo directory."
-                            rm -rf Terraform.git
-                        fi
-                        echo "Cloning the repository..."
-                        git clone https://github.com/Noah-linux/Terraform.git
-                    '''
-                }
+       stage('Checkout Code') {
+    steps {
+        script {
+            // Check if the directory exists
+            if (fileExists('Terraform')) {
+                // Remove the directory if it exists
+                sh 'rm -rf Terraform'
             }
+            // Clone the repository
+            sh 'git clone https://github.com/Noah-linux/Terraform.git'
         }
+    }
+}
+
 
         stage('Terraform Init') {
             steps {
