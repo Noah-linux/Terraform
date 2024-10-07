@@ -43,7 +43,7 @@ pipeline {
                     sh '''
                         if [ -d "terraform-demo" ]; then
                             echo "Removing existing terraform-demo directory."
-                            rm -rf terraform-demo
+                            rm -rf Terraform.git
                         fi
                         echo "Cloning the repository..."
                         git clone https://github.com/Noah-linux/Terraform.git
