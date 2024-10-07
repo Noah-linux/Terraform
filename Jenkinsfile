@@ -41,7 +41,7 @@ pipeline {
                 script {
                     // Check if the directory exists, remove it if it does, and then clone the repository
                     sh '''
-                        if [ -d "terraform-demo" ]; then
+                        if [ -d "Terraform.git" ]; then
                             echo "Removing existing terraform-demo directory."
                             rm -rf Terraform.git
                         fi
