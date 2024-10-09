@@ -6,8 +6,6 @@ pipeline {
         string(name: 'ami', defaultValue: 'ami-005fc0f236362e99f', description: 'AMI ID to use for the instance')
         string(name: 'instance_type', defaultValue: 't2.micro', description: 'Type of the instance')
         string(name: 'key_name', defaultValue: 'workstation-key', description: 'Key pair name for SSH access')
-        string(name: 'aws_key', defaultValue: '', description: 'AWS Access Key ID') // ADDED THIS
-        string(name: 'aws_secret', defaultValue: '', description: 'AWS Secret Access Key') // ADDED THIS
     }
 
     stages {
@@ -63,8 +61,11 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
-                    // Run Terraform plan with parameters
-                    sh "terraform plan -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}' -var='aws_key=${params.aws_key}' -var='aws_secret=${params.aws_secret}'" // ADDED THIS
+                    // Use AWS credentials stored in Jenkins
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'Jenkins_aws_key']]) { // ADDED THIS
+                        // Run Terraform plan with parameters
+                        sh "terraform plan -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
+                    } // ADDED THIS
                 }
             }
         }
@@ -72,8 +73,11 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 script {
-                    // Apply the Terraform changes
-                    sh "terraform apply -auto-approve -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}' -var='aws_key=${params.aws_key}' -var='aws_secret=${params.aws_secret}'" // ADDED THIS
+                    // Use AWS credentials stored in Jenkins
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'Jenkins_aws_key']]) { // ADDED THIS
+                        // Apply the Terraform changes
+                        sh "terraform apply -auto-approve -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
+                    } // ADDED THIS
                 }
             }
         }
@@ -88,4 +92,3 @@ pipeline {
         }
     }
 }
-
