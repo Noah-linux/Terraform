@@ -56,6 +56,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
+                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_integration_Key']]) {
                     // Initialize Terraform
                     sh 'terraform init'
                 }
@@ -65,6 +66,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
+                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_integration_Key']]) {
                     // Run Terraform plan with parameters
                     sh "terraform plan -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
                 }
@@ -74,6 +76,7 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 script {
+                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_integration_Key']]) {
                     // Apply the Terraform changes
                     sh "terraform apply -auto-approve -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
                 }
