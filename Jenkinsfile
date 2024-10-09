@@ -58,6 +58,7 @@ pipeline {
                 }
             }
         }
+        }
 
         stage('Terraform Plan') {
             steps {
@@ -93,6 +94,6 @@ pipeline {
             echo 'Terraform apply failed!'
         }
     }
-}
+
 
 
