@@ -52,6 +52,7 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
+                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'Jenkins_aws_key']]) { // ADDED THIS
                     // Initialize Terraform
                     sh 'terraform init'
                 }
