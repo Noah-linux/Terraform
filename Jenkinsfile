@@ -62,7 +62,7 @@ pipeline {
                 }
             }
         }
-
+        }
         stage('Terraform Plan') {
             steps {
                 script {
@@ -71,6 +71,7 @@ pipeline {
                     sh "terraform plan -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
                 }
             }
+        }
         }
 
         stage('Terraform Apply') {
@@ -92,4 +93,5 @@ pipeline {
             echo 'Terraform apply failed!'
         }
     }
+}
 }
