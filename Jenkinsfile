@@ -64,7 +64,7 @@ pipeline {
                     // Use AWS credentials stored in Jenkins
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'Jenkins_aws_key']]) { // ADDED THIS
                         // Run Terraform plan with parameters
-                        sh "terraform plan -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
+                        sh 'terraform plan -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}''
                     } // ADDED THIS
                 }
             }
@@ -76,7 +76,7 @@ pipeline {
                     // Use AWS credentials stored in Jenkins
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'Jenkins_aws_key']]) { // ADDED THIS
                         // Apply the Terraform changes
-                        sh "terraform apply -auto-approve -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}'"
+                        sh 'terraform apply -auto-approve -var='aws_region=${params.aws_region}' -var='ami=${params.ami}' -var='instance_type=${params.instance_type}' -var='key_name=${params.key_name}''
                     } // ADDED THIS
                 }
             }
